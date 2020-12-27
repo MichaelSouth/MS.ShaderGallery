@@ -1,0 +1,25 @@
+﻿precision highp float; 
+uniform float time; 
+uniform vec2 resolution; 
+uniform vec2 mouse; 
+
+void main() 
+{
+    float tempTime = time*30.0;
+    vec2 o = gl_FragCoord.xy-.5*resolution.xy;
+    float g = dot(o,vec2(.8,.6))/resolution.x+.5;
+    float w = 1.4/resolution.y;
+    vec2 c = o*w;
+    float a = 3.14159265358979323846433832/(17.+6.*cos(tempTime*.08));
+    mat2 r = mat2(cos(a),sin(a),-sin(a),cos(a));
+    float l = 0.;
+    for(int i = 0;i<33;i++)
+    {
+        c *= r;
+        float a = pow(fract(cos(float(i)*28.3)*465.5+.01*tempTime)*2.-1.,4.);
+    	l = max(l,smoothstep(w*6.,w*4.,abs(fract(c.x+.2)-.5))*a);
+        l = max(l,smoothstep(w*5.,w*3.,abs(fract(c.y+.1)-.5))*a);
+    }
+    float v = 1.-dot(o,o)/resolution.x/resolution.x*3.;
+    gl_FragColor = vec4(mix(vec3(.1-.1*g),g*vec3(.45,.4,.55)+.2,l),1)*v;
+}

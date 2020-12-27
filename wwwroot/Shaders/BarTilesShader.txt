@@ -1,0 +1,33 @@
+﻿precision highp float; 
+uniform float time; 
+uniform vec2 resolution; 
+uniform vec2 mouse; 
+
+float hash1(vec2 p)
+{
+ 	return fract(sin(p.x*91.5-p.y*82.6)*377.4); 
+}
+
+void main()
+{
+    const float aa = 4.;
+    
+    vec3 n = vec3(0);
+    
+    for(float x = 0.;x<aa;x++)
+    for(float y = 0.;y<aa;y++)
+    {
+        vec2 uv = (gl_FragCoord.xy+vec2(x,y)/aa)/resolution.y;
+        vec2 ang = sqrt(vec2(.9,.1));
+        uv *= mat2(ang,-ang.y,ang.x);
+
+        float h1 = floor(hash1(floor(uv*8.))+.5);
+        float h2 = hash1(floor(uv*vec2(8.+120.*h1,120.-120.*h1))+.9);
+        float h3 = pow(hash1(floor(uv*8.)+.1),.2);
+        n += pow(vec3(h2*h3),vec3(3,2,1));
+    }
+    float v = length(gl_FragCoord.xy/resolution.xy-.5);
+    n /= aa*aa;
+    n /= 1.+4.*v*v;
+    gl_FragColor = vec4(n,1);
+}
