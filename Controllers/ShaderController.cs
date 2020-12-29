@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MS.ShaderGallery.Controllers
 {
@@ -25,13 +26,26 @@ namespace MS.ShaderGallery.Controllers
             {
                 var shader = new Shader
                 {
-                    Title = new System.IO.FileInfo(file).Name,
+                    Title = GetShaderTitle(file),
                     Code = System.IO.File.ReadAllText(file)
                 };
                 shaders.Add(shader);
             }
 
             return shaders;
+        }
+
+        private static string GetShaderTitle(string fileName)
+        {
+            var temp = System.IO.Path.GetFileNameWithoutExtension(fileName);
+            var temps = SplitCamelCase(temp);
+            temp = string.Join(" ", temps);
+            return temp;
+        }
+
+        private static string[] SplitCamelCase(string source)
+        {
+            return Regex.Split(source, @"(?<!^)(?=[A-Z])");
         }
     }
 }

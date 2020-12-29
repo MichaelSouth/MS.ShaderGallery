@@ -1,20 +1,31 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Shader Gallery</title>
-    <link rel="stylesheet" href="style.css">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Shader Gallery</title>
+        <link rel="stylesheet" href="style.css">
 
-    <script src="render.js" type="text/javascript" defer="defer"></script>
-    <script src="main.js" type="text/javascript" defer="defer"></script>
-</head>
-<body>
+        <script src="render.js" type="text/javascript" defer="defer"></script>
+        <script src="main.js" type="text/javascript" defer="defer"></script>
+    </head>
+    <body>
 
-    <main class="mainPanel">
-        <h1>Shader Gallery</h1>
+        <main class="mainPanel">
+            <a href="index.htm"><h1>Shader Gallery</h1></a>
 
-        <ul id="shaderList"></ul>
+            <ul id="shaderList"></ul>
 
-    </main>
-</body>
+            <div id="shaderEditor">
+                <div id="shaderEditorToolbar">
+                    <button type="button" id="compileButton">Compile</button>
+                    <button type="button" id="saveButton">Save</button>
+                    <button type="button" id="fullScreenButton">Full Screen</button>
+                </div>
+                <div id="shaderPreview">
+                    <canvas id="editorCanvas" width="900" height="600"></canvas>
+                    <textarea id="shaderSourceCodeTextArea" rows="20"></textarea>
+                </div>
+            </div>
+        </main>
+    </body>
 </html>

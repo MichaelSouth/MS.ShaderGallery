@@ -7,7 +7,7 @@ const float MOTION_BLUR_LENGTH = 0.025;
 const float MOTION_BLUR_SAMPLES = 10.0;
 const float ARC_MAX_LEN =8.0;
 const float ARC_MAX =0.3;
-float TIME_OFFSET =13.75 + (mouse.x / resolution.x - .5);
+float TIME_OFFSET =13.75 + (time / resolution.x - .5);
 const float JUMPING_SPEED =1.0;
 
 const float PI = 3.141592653589793238462643;

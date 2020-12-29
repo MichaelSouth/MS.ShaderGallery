@@ -3,9 +3,19 @@ body {
     color: #ffffff;
 }
 
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+textarea {
+    color: #ffffff;
+    background-color: #1e1e1e;
+}
+
 h1 {   
     font-family: "Times New Roman", Times, serif;
-    font-size: 120px;
+    font-size: 70px;
     margin: 20px;
     text-shadow: 3px 3px #777777;
     filter: blur(1px);
@@ -18,42 +28,71 @@ button {
     color: #ffffff;
 }
 
-label {
-    font-size: 24px;
-}
 
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333333;
 }
 
 li {
+    position: relative;
     float: left;
 }
 
-#backgroundCanvas {
-    box-shadow: 5px 5px 10px #444444;
-    border-radius: 50px;
-    filter: blur(2px);
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: -1;
+    li .shaderTitle {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0%;
+        margin: 16px;
+        left: 0;
+        font-size: 24px;
+        color: white;
+        font-family: sans-serif;
+        opacity: 0;
+        visibility: hidden;
+        transition: visibility 0s, opacity 1.0s linear;
+        text-shadow: 3px 3px #333333;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+li:hover .shaderCanvas {
+    filter: blur(8px);
 }
 
-.mainPanel {
-    display: inline-block;
-    border-radius: 50px;
-    margin: 30px;
-    background-color: #1e1e1e;
-    opacity: 0.85;
-    padding-left: 30px;
-    padding-right: 30px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+li:hover .shaderTitle {
+
+    visibility: visible;
+    opacity: 1.0;
 }
 
+#shaderEditor {
+    display: none;
+    position: relative;
+}
+
+#shaderEditorToolbar {
+    position: relative;
+    float: initial;
+}
+
+#shaderPreview {
+    position: relative;
+    float: initial;
+}
+
+#editorCanvas {
+}
+
+#shaderSourceCodeTextArea {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    left: 0;
+    opacity: 0.5;
+}

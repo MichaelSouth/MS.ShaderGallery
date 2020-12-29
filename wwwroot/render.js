@@ -91,7 +91,7 @@ class RenderBackground {
         const animate = function (time, renderBackground) {
             // Draw the quad
             renderBackground.gl.drawElements(renderBackground.gl.TRIANGLES, renderBackground.indices.length, renderBackground.gl.UNSIGNED_SHORT, 0);
-            renderBackground.shaderTime = renderBackground.shaderTime + 0.001;
+            renderBackground.shaderTime = renderBackground.shaderTime + 0.0025;
             renderBackground.gl.uniform1f(renderBackground.locationOfTime, renderBackground.shaderTime);
             renderBackground.gl.uniform2f(renderBackground.locationOfMouse, renderBackground.mouseX, renderBackground.mouseY);
             const now = new Date().getTime();
