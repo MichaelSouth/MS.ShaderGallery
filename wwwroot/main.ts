@@ -8,46 +8,78 @@
 
         const fullScreenButton = document.getElementById('fullScreenButton') as HTMLButtonElement;
         fullScreenButton.addEventListener("click", (e: Event) => this.fullScreenButtonClickExecute(e));
+        
+        const shaderGalleryButton = document.getElementById('shaderGalleryButton') as HTMLButtonElement;
+        shaderGalleryButton.addEventListener("click", (e: Event) => this.shaderGalleryButtonClickExecute(e));
     }
 
-    getShaders() {
-        fetch('/Shader')
-            .then(response => response.json())
-            .then(data => {
+    async getShaders() {
+        try {
+            const response = await fetch('/Shader');
+            if (!response.ok) {
+                throw response;
+            };
 
-                console.log(data);
+            const json = await response.json();
+            console.log(json);
 
-                const shaderList = document.getElementById('shaderList') as HTMLUListElement;
+            const shaderList = document.getElementById('shaderList') as HTMLUListElement;
 
-                for (let i = 0; i < data.length; i++) {
-                    this.createShader(data[i], shaderList);
-                }
-            });
+            for (let i = 0; i < json.length; i++) {
+                this.createShader(json[i] as Shader, shaderList);
+            }
+        }
+        catch (error : any) {
+            console.error('Fetch failed getting shaders:'+error)
+
+            //TODO show user error
+        }
+
+        //await fetch('/Shader')
+        //    .then(response => {
+        //        if (!response.ok) throw response.statusText;
+        //        return response;
+        //    })
+        //    .then(response => response.json())
+        //    .then(data => {
+
+        //        console.log(data);
+
+        //        const shaderList = document.getElementById('shaderList') as HTMLUListElement;
+
+        //        for (let i = 0; i < data.length; i++) {
+        //            this.createShader(data[i] as Shader, shaderList);
+        //        }
+        //    }).catch(error => {
+        //        console.log('Fetch faile3d: &{error}')
+
+        //        //Show user
+        //    });
 
         return;
     }
 
-    private createShader(obj: any, shaderList: HTMLUListElement) {
-        console.log(obj.title);
+    private createShader(shader: Shader, shaderList: HTMLUListElement) {
+        console.log(shader.title);
 
         const li = document.createElement("li");
-        li.addEventListener("click", (e: Event) => this.shaderClickExecute(obj));
+        li.addEventListener("click", (e: Event) => this.shaderClickExecute(shader));
 
         const canvas = document.createElement('canvas') as HTMLCanvasElement;
-        canvas.id = obj.title;
+        canvas.id = shader.title;
         canvas.width = 400;
         canvas.height = 300;
         canvas.className = "shaderCanvas";
         li.appendChild(canvas);
 
         const shaderTitle = document.createElement('div') as HTMLDivElement;
-        shaderTitle.innerHTML = obj.title;
+        shaderTitle.innerHTML = shader.title;
         shaderTitle.className = "shaderTitle";
         li.appendChild(shaderTitle);
         shaderList.appendChild(li);
 
         const renderBackground = new RenderBackground();
-        renderBackground.initiateWebGl(obj.code, canvas);
+        renderBackground.initiateWebGl(shader.code, canvas);
         renderBackground.renderLoop();
     }
 
@@ -81,8 +113,14 @@
         }
     }
 
-    shaderClickExecute(obj) {
-        console.log(obj.title+ " clicked");
+    shaderGalleryButtonClickExecute(obj) {
+        console.log("Shader gallery button clicked");
+
+        window.location.href = 'index.htm';
+    }
+
+    shaderClickExecute(shader: Shader) {
+        console.log(shader.title+ " clicked");
 
         const shaderList = document.getElementById('shaderList') as HTMLUListElement;
         const shaderEditor = document.getElementById('shaderEditor') as HTMLDivElement;
@@ -92,11 +130,25 @@
         shaderList.style.display = "none";
         shaderEditor.style.display = "block";
 
-        shaderSourceCode.value = obj.code;
+        shaderSourceCode.value = shader.code;
         const renderBackground = new RenderBackground();
-        renderBackground.initiateWebGl(obj.code, editorCanvas);
+        renderBackground.initiateWebGl(shader.code, editorCanvas);
         renderBackground.renderLoop();
     }
+}
+
+interface Shader {
+    title: string;
+    code: string;
+}
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker
+            .register("/serviceWorker.js")
+            .then(res => console.log("service worker registered"))
+            .catch(err => console.log("service worker not registered", err))
+    })
 }
 
 // start the app
