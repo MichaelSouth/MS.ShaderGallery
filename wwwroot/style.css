@@ -28,7 +28,6 @@ button {
     color: #ffffff;
 }
 
-
 ul {
     list-style-type: none;
     margin: 0;
@@ -39,35 +38,6 @@ ul {
 li {
     position: relative;
     float: left;
-}
-
-    li .shaderTitle {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        top: 0%;
-        margin: 16px;
-        left: 0;
-        font-size: 24px;
-        color: white;
-        font-family: sans-serif;
-        opacity: 0;
-        visibility: hidden;
-        transition: visibility 0s, opacity 1.0s linear;
-        text-shadow: 3px 3px #333333;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-li:hover .shaderCanvas {
-    filter: blur(8px);
-}
-
-li:hover .shaderTitle {
-
-    visibility: visible;
-    opacity: 1.0;
 }
 
 #shaderEditor {

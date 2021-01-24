@@ -27,42 +27,19 @@ class Main {
             console.error('Fetch failed getting shaders:' + error);
             //TODO show user error
         }
-        //await fetch('/Shader')
-        //    .then(response => {
-        //        if (!response.ok) throw response.statusText;
-        //        return response;
-        //    })
-        //    .then(response => response.json())
-        //    .then(data => {
-        //        console.log(data);
-        //        const shaderList = document.getElementById('shaderList') as HTMLUListElement;
-        //        for (let i = 0; i < data.length; i++) {
-        //            this.createShader(data[i] as Shader, shaderList);
-        //        }
-        //    }).catch(error => {
-        //        console.log('Fetch faile3d: &{error}')
-        //        //Show user
-        //    });
         return;
     }
     createShader(shader, shaderList) {
         console.log(shader.title);
         const li = document.createElement("li");
         li.addEventListener("click", (e) => this.shaderClickExecute(shader));
-        const canvas = document.createElement('canvas');
-        canvas.id = shader.title;
-        canvas.width = 400;
-        canvas.height = 300;
-        canvas.className = "shaderCanvas";
-        li.appendChild(canvas);
-        const shaderTitle = document.createElement('div');
-        shaderTitle.innerHTML = shader.title;
-        shaderTitle.className = "shaderTitle";
-        li.appendChild(shaderTitle);
+        const shaderCanvas = document.createElement('shader-canvas');
+        shaderCanvas.id = shader.title;
+        shaderCanvas.setAttribute('title', shader.title);
+        shaderCanvas.setAttribute('code', shader.code);
+        shaderCanvas.className = "shaderCanvas";
+        li.appendChild(shaderCanvas);
         shaderList.appendChild(li);
-        const renderBackground = new RenderBackground();
-        renderBackground.initiateWebGl(shader.code, canvas);
-        renderBackground.renderLoop();
     }
     compileButtonClickExecute(obj) {
         console.log("Compile button clicked");

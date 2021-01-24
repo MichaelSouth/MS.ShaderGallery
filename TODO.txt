@@ -1,6 +1,5 @@
 ﻿Fix offline mode (get shaaders call)
 Handle service not running (and display erro message)
-Publish to Azure
 Test on phone
 Allow save shaders
 Create new shader
