@@ -67,6 +67,9 @@
         //Create a vertex shader object
         const vertShader = this.gl.createShader(this.gl.VERTEX_SHADER);
 
+        this.gl.getExtension('OES_standard_derivatives');
+        this.gl.getExtension('EXT_shader_texture_lod');
+
         //Attach vertex shader source code
         this.gl.shaderSource(vertShader, vertCode);
 
@@ -82,6 +85,11 @@
 
         // Compile the fragment shader
         this.gl.compileShader(fragShader);
+        const compileErrorMessage = this.gl.getShaderInfoLog(fragShader);
+        
+        if (compileErrorMessage.length > 0) {
+            console.log(compileErrorMessage);
+        }
 
         // Create a shader program object to store combined shader program
         const shaderProgram = this.gl.createProgram();

@@ -20,7 +20,7 @@ namespace MS.ShaderGallery.Controllers
         public ActionResult<IEnumerable<Shader>> Get()
         {
             var shaders = new List<Shader>();
-            var files = System.IO.Directory.GetFiles(@"wwwroot\Shaders", "*.txt" );
+            var files = System.IO.Directory.GetFiles(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "wwwroot", "Shaders"));
 
             foreach (var file in files)
             {

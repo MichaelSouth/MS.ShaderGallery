@@ -35,6 +35,8 @@ class RenderBackground {
             'void main(void) {' + ' gl_Position = vec4(coordinates, 1.0);' + '}';
         //Create a vertex shader object
         const vertShader = this.gl.createShader(this.gl.VERTEX_SHADER);
+        this.gl.getExtension('OES_standard_derivatives');
+        this.gl.getExtension('EXT_shader_texture_lod');
         //Attach vertex shader source code
         this.gl.shaderSource(vertShader, vertCode);
         //Compile the vertex shader
@@ -46,6 +48,10 @@ class RenderBackground {
         this.gl.shaderSource(fragShader, fragCode);
         // Compile the fragment shader
         this.gl.compileShader(fragShader);
+        const compileErrorMessage = this.gl.getShaderInfoLog(fragShader);
+        if (compileErrorMessage.length > 0) {
+            console.log(compileErrorMessage);
+        }
         // Create a shader program object to store combined shader program
         const shaderProgram = this.gl.createProgram();
         // Attach a vertex shader
