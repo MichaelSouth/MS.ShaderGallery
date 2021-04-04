@@ -1,5 +1,8 @@
-﻿Fix offline mode (get shaaders call)
-Handle service not running (and display erro message)
+﻿GLSL type checker and formatter:-
+http://evanw.github.io/glslx/
+
+Fix PWA offline mode (get shaaders call)
+Handle service not running (and display error message)
 Test on phone
 Allow save shaders
 Create new shader

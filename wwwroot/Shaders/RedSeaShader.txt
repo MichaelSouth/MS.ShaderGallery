@@ -13,8 +13,8 @@ const int ITER_GEOMETRY = 3;
 const int ITER_FRAGMENT = 5;
 const float SEA_HEIGHT = 0.6;
 const float SEA_CHOPPY = 4.0;
-const float SEA_SPEED = 0.8;
-const float SEA_FREQ = 0.16;
+const float SEA_SPEED = 0.2;
+const float SEA_FREQ = 0.46;
 const vec3 SEA_BASE = vec3(.5,0.00,0.00);
 const vec3 SEA_WATER_COLOR = vec3(0.6,0.9,0.6)*0.6;
 const mat2 octave_m = mat2(1.6,1.2,-1.2,1.6);
@@ -160,9 +160,10 @@ vec3 getPixel(in vec2 coord, float time) {
     float EPSILON_NRM = (0.1 / resolution.x);
 
     // ray
-    vec3 ang = vec3(sin(time*3.0)*0.1,sin(time)*0.2+0.3,time);    
-    vec3 ori = vec3(0.0,3.5,time*5.0);
-    vec3 dir = normalize(vec3(uv.xy,-2.0)); dir.z += length(uv) * 0.14;
+    vec3 ang = vec3(0.0,0.5,0.0);    
+    vec3 ori = vec3(0.0,3.0,time * -30.5);
+    vec3 dir = normalize(vec3(uv.xy,-2.0)); 
+dir.z += length(uv) * 0.14;
     dir = normalize(dir) * fromEuler(ang);
     
     // tracing

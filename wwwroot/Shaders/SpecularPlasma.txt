@@ -7,19 +7,24 @@ uniform float time;
 uniform vec2 resolution; 
 uniform vec2 mouse; 
 
+bool specular = true;
+
 void main()
 {
     vec2 a = vec2(resolution.x /resolution.y, 1);
     vec2 c = gl_FragCoord.xy / resolution.xy * a * 4. + time * .3;
 
-	float k = .1 + cos(c.y + sin(.848 - time)) + 5.4 * time;
-	float w = .9 + sin(c.x + cos(.628 + time)) - 8.7 * time;
+    float k = .1 + cos(c.y + sin(.848 - time)) + 5.4 * time;
+    float w = .9 + sin(c.x + cos(.628 + time)) - 8.7 * time;
 	float d = length(c);
 	float s = 7. * cos(d+w) * sin(k+w);
 	
 	gl_FragColor = vec4(.5 + .5 * cos(s + vec3(.2, .5, .9)), 1);
     
-    gl_FragColor *= vec4(1, .7, .4, 1) 
-            *  pow(max(normalize(vec3(length(dFdx(gl_FragColor )), length(dFdy(gl_FragColor )), .5/resolution.y)).z, 0.), 2.)
-            + .75; 
+    if (specular)
+    {
+        gl_FragColor *= vec4(1, .7, .4, 1) 
+                     *  pow(max(normalize(vec3(length(dFdx(gl_FragColor )), length(dFdy(gl_FragColor )), .5/resolution.y)).z, 0.), 2.)
+                       + .75; 
+    }
 }
